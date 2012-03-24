@@ -122,29 +122,36 @@ class email_single_doc(osv.osv_memory):
                 NrFin = doc['name']
                 anr = doc['id']
                 
+                
 
                 
         
-        return{'dadata':DtIni,'adata':DtFin,'danrv':NrIni,'anrv':NrFin,'sconto':False,'prezzi':False}
+        return{'dadata':DtIni,'adata':DtFin,'danrv':NrIni,'anrv':NrFin,'sconto':False,'prezzi':False, 'agente':0}
 
  def _build_contexts(self, cr, uid, ids, data, context=None):
         #import pdb;pdb.set_trace()
         if context is None:
             context = {}
         result = {}
+        #data['form'] = self.read(cr, uid, ids, ['dadata',  'adata',  'danrv', 'anrv','sconto','agente','prezzi'])[0]
         sub = data['form']['danrv']
         result = {'danr':data['form']['danrv'],'anr':data['form']['anrv'],'dadata':data['form']['dadata'],
-                  'adata':data['form']['adata'], 'sconto':data['form']['sconto'], 'prezzi':data['form']['prezzi'], 'name':sub}
+                  'adata':data['form']['adata'], 'sconto':data['form']['sconto'], 'prezzi':data['form']['prezzi'], 'name':sub,
+                  }
         var = data['form']['prezzi']
         #import pdb;pdb.set_trace()
-        if var is True or 1:
-            result = {'danr':data['form']['danrv'],'anr':data['form']['anrv'],'dadata':data['form']['dadata'],
+        #parametri = self.browse(cr,uid,ids)[0]
+        #if parametri.agente:
+        #    data['form']['agente']=parametri.agente.id
+        #else:
+        #data['form']['agente']= 0   
+        if var == True or var == 1:
+            result = {'danr':data['form']['danrv'],'anr':data['form']['anrv'],'agente':0,'dadata':data['form']['dadata'],
                   'adata':data['form']['adata'], 'sconto':data['form']['sconto'], 'prezzi':1,'name':sub}
         else:
-            result = {'danr':data['form']['danrv'],'anr':data['form']['anrv'],'dadata':data['form']['dadata'],
+            result = {'danr':data['form']['danrv'],'anr':data['form']['anrv'],'agente':0,'dadata':data['form']['dadata'],
                   'adata':data['form']['adata'], 'sconto':data['form']['sconto'], 'prezzi':0,'name':sub}
         return result
-
 
  def report_name(self, cr, uid, ids, data, context=None):
         #import pdb;pdb.set_trace()
